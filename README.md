@@ -96,8 +96,8 @@ graph TD
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/curalink.git
-cd curalink
+git clone https://github.com/WebDevEJAJ/AI-Powered-medical-Assistant-1.git
+cd AI-Powered-medical-Assistant-1
 ```
 
 ### 2. Backend Setup
