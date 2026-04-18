@@ -26,6 +26,8 @@ const allowedOrigins = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim()) 
   : ['http://localhost:5173', 'https://ai-powered-medical-assistant.vercel.app'];
 
+console.log('🌍 Allowed Origins:', allowedOrigins);
+
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (like mobile apps or curl requests)
