@@ -19,28 +19,19 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(helmet());
 
-// Configure CORS
-const allowedOrigins = process.env.CORS_ORIGIN 
-  ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim()) 
-  : ['http://localhost:5173', 'https://ai-powered-medical-assistant.vercel.app'];
-
-console.log('🌍 Allowed Origins:', allowedOrigins);
-
+// ⚠️ CORS MUST come BEFORE helmet — otherwise preflight requests get blocked
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Session-Id', 'X-User-Id'],
 }));
+app.options('*', cors());
+
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+}));
+
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
